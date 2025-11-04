@@ -21,6 +21,7 @@ A automated Secret Santa in Python — Assign participants and automatically for
 
 > [!WARNING] 
 > This is a capture from Mail (app) on macOS, the rendering may vary depending on the email client.
+>
 > Email HTML/CSS has limited support across clients and some styles may not render exactly as the same. 
 
 ---
@@ -101,9 +102,14 @@ Each line corresponds to a group of participants who should be excluded from eac
 
 ### 1. Send assignments
 
+
+
 ```bash
 ./secret_santa.py send-emails --budget 20€ --language en
 ```
+
+* `--budget`: Set the maximum gift budget.
+* `--language`: Set the language for the emails
 
 ### 2. Forward wishlists manually
 
@@ -111,11 +117,15 @@ Each line corresponds to a group of participants who should be excluded from eac
 ./secret_santa.py forward-wishlists --language en
 ```
 
+* `--language`: Set the language for the emails
+
 ### _(Optional)_ Enable automatic wishlist forwarding
 
 ```bash
 nohup ./secret_santa.py auto-forward --language en &
 ```
+
+* `--language`: Set the language for the emails
 
 Check if it's running: 
 ```bash
