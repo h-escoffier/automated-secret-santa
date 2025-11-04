@@ -22,7 +22,7 @@ A automated Secret Santa in Python — Assign participants and automatically for
 > [!WARNING] 
 > This is a capture from Mail (app) on macOS, the rendering may vary depending on the email client.
 >
-> Email HTML/CSS has limited support across clients and some elements may not render exactly as the same. 
+> Email HTML/CSS has limited support across clients and some elements may not render exactly the same. 
 
 ---
 
@@ -102,8 +102,6 @@ Each line corresponds to a group of participants who should be excluded from eac
 
 ### 1. Send assignments
 
-
-
 ```bash
 ./secret_santa.py send-emails --budget 20€ --language en
 ```
@@ -139,5 +137,6 @@ kill <PID>
 
 ---
 
-## LICENSE
+## License
+
 Do whatever, just don't say 'yes' when you should say 'no'. 
