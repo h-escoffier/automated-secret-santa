@@ -22,7 +22,7 @@ A automated Secret Santa in Python — Assign participants and automatically for
 > [!WARNING] 
 > This is a capture from Mail (app) on macOS, the rendering may vary depending on the email client.
 >
-> Email HTML/CSS has limited support across clients and some styles may not render exactly as the same. 
+> Email HTML/CSS has limited support across clients and some elements may not render exactly as the same. 
 
 ---
 
