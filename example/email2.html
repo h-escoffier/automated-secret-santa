@@ -1,0 +1,93 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="color-scheme" content="only">
+    <meta name="supported-color-schemes" content="light">
+
+    <style>
+        body {
+            background-color: #0f0f23 !important;
+            color: #b9b9c0 !important;
+            font-family: "Garamond", monospace; 
+            font-weight: 200;
+            font-size: 10pt;
+            padding: 20px;
+            -webkit-text-size-adjust: none !important;
+            -ms-text-size-adjust: none !important;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 400;
+            color: #ffb347 !important;
+            text-shadow: 0 0 2px #ffb347, 0 0 5px #ffcc33;
+        }
+
+        h2 a {
+            text-decoration: none;
+            color: #0ad228 !important;
+            text-shadow: 0 0 5px #0ad228, 0 0 10px #0ad228, 0 0 20px #a7c957;
+        }
+
+        a {
+            color: #bc4749 !important;
+            text-decoration: none;
+        }
+
+        a:hover, a:focus {
+            filter: brightness(1.5);
+            text-shadow: 0 0 8px #bc4749, 0 0 15px #bc4749;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .text-content {
+            text-align: justify;
+            max-width: 600px;
+             margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.5;
+        }
+
+        span.highlight {
+            color: #a7c957;
+        }
+
+        /* --- Mobile --- */
+        @media screen and (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .text-content {
+                max-width: 100% !important;
+                font-size: 12pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Ho ho ho {santa} !</h2>
+    <div class="container">
+        <div class="text-content">
+            <p>Tu as reçu une communication de <a href="#">{santa_of}</a>:</p>
+            <p>
+                """<br>
+                {message}<br>
+                """</p>
+            <p>Le Père Noël</p>
+        </div>
+    </div>
+</body>
+</html>

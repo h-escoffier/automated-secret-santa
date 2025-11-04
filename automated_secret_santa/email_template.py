@@ -1,0 +1,265 @@
+from string import Template
+
+
+def create_email1(santa, santa_of, budget, language):
+    if language == 'fr':
+        html_body = email1_template_fr(santa, santa_of, budget)
+    elif language == 'en':
+        html_body = email1_template_en(santa, santa_of, budget)
+    full_html = email1_template(html_body)
+    return full_html
+
+
+def create_email2(santa, santa_of, message, language):
+    if language == 'fr':
+        html_body = email2_template_fr(santa, santa_of, message)
+    elif language == 'en':
+        html_body = email2_template_en(santa, santa_of, message)
+    full_html = email2_template(html_body)
+    return full_html
+
+
+def email1_template_fr(santa, santa_of, budget):
+    return f"""
+        <h2>Ho ho ho {santa} !</h2>
+            <div class="container">
+                <div class="text-content">
+            <p>Je t'ai désigné pour être le père noël secret de <a href="#">{santa_of}</a>!<br>
+            <p>Le budget est de <span class="highlight">{budget}</span>.<br>
+            <p>Tu peux faire ta liste d'envie à ton père noël en répondant à cet email, je me chargerai de la transmettre à la personne que j'ai désignée pour toi.</p>
+            <p>Le Père Nöel</p>
+        """
+
+
+def email1_template_en(santa, santa_of, budget):
+    return f"""
+        <h2>Ho ho ho {santa} !</h2>
+                <div class="container">
+                    <div class="text-content">
+        <p>You have been chosen to be the secret Santa for <a href="#">{santa_of}</a>!</p>
+        <p>The budget is <span class="highlight">{budget}</span>.</p>
+        <p>You can send your wishlist to your santa by replying to this email, and I will make sure it reaches the person I’ve assigned to you.</p>
+        <p>Santa Claus</p>
+    """
+
+
+def email2_template_fr(santa, santa_of, message: str) -> str:
+    return f"""
+    <h2>Ho ho ho {santa} !</h2>
+        <div class="container">
+            <div class="text-content">
+                <p>Tu as reçu une communication de <a href="#">{santa_of}</a>:</p>
+                <p>
+                    \"\"\"<br>
+                    {message}<br>
+                    \"\"\"
+                </p>
+                <p>Le Père Noël</p>
+    """
+
+
+def email2_template_en(santa, santa_of, message: str) -> str:
+    return f"""
+    <h2>Ho ho ho {santa} !</h2>
+        <div class="container">
+            <div class="text-content">
+                <p>You have received a message from <a href="#">{santa_of}</a>:</p>
+                <p>
+                    \"\"\"<br>
+                    {message}<br>
+                    \"\"\"
+                </p>
+                <p>Santa Claus</p>
+    """
+
+
+def email1_template(div_text_content: str) -> str:
+    """
+    HTML email template for Secret Santa assignment email.
+
+    The ASCII art tree have been adapted from ASCII Art Archive (https://www.asciiart.eu/holiday-and-events/christmas/trees).
+    """
+    template = Template("""
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="color-scheme" content="only">
+        <meta name="supported-color-schemes" content="light">
+
+        <style>
+            body {
+                background-color: #0f0f23 !important;
+                color: #b9b9c0 !important;
+                font-family: "Garamond", monospace; 
+                font-weight: 200;
+                font-size: 10pt;
+                padding: 20px;
+                -webkit-text-size-adjust: none !important;
+                -ms-text-size-adjust: none !important;
+            }
+
+            h2 { font-size: 2em; font-weight: 400; color: #ffb347 !important; text-shadow: 0 0 2px #ffb347, 0 0 5px #ffcc33; }
+            h2 a { text-decoration: none; color: #0ad228 !important; text-shadow: 0 0 5px #0ad228, 0 0 10px #0ad228, 0 0 20px #a7c957; }
+            a { color: #bc4749 !important; text-decoration: none; }
+            a:hover, a:focus { filter: brightness(1.5); text-shadow: 0 0 8px #bc4749, 0 0 15px #bc4749; }
+            span.highlight { color: #a7c957; }
+                        
+            .text-content {
+                text-align: justify;
+                max-width: 600px;
+                margin-bottom: 20px;
+            }
+
+            pre.ascii-art {
+                font-family: monospace;
+                line-height: 1;
+                margin: 0;
+                white-space: pre;
+                min-width: 20em;
+            }
+
+            .star { color: #f9e900; animation: twinkle 1.5s infinite alternate ease-in-out; text-shadow: 0 0 5px #f9e900, 0 0 10px rgba(249,233,0,0.6);}
+            .ball { color: #ff4c4c; animation: blink-red 2s infinite alternate ease-in-out; text-shadow: 0 0 4px #ff4c4c, 0 0 8px rgba(255,76,76,0.5);}
+            .ball_blue { color: #735ed3; animation: blink-blue 2.5s infinite alternate ease-in-out; text-shadow: 0 0 4px #735ed3, 0 0 8px rgba(115,94,211,0.5);}
+            .tree { color: #0ad228; }
+            .trunk { color: #8b5a2b; }
+            .light { color: #ffffff; animation: sparkle 1.8s infinite alternate ease-in-out; text-shadow: 0 0 5px #ffffff, 0 0 10px rgba(255,255,255,0.7);}
+            .candle { color: #ffb347; animation: flicker 0.15s infinite alternate ease-in-out; text-shadow: 0 0 4px #ffb347, 0 0 8px #ffcc33, 0 0 12px rgba(255,179,71,0.8), 0 0 16px rgba(255,204,51,0.6);}
+
+            @keyframes twinkle {0% { opacity: 0.6; text-shadow: 0 0 3px #f9e900; } 100% { opacity: 1; text-shadow: 0 0 10px #fff700, 0 0 20px #f9e900; }}
+            @keyframes blink-red {0% { opacity: 0.5; text-shadow: 0 0 2px #ff4c4c; } 100% { opacity: 1; text-shadow: 0 0 8px #ff4c4c, 0 0 15px rgba(255,76,76,0.8); }}
+            @keyframes blink-blue {0% { opacity: 0.5; text-shadow: 0 0 2px #735ed3; } 100% { opacity: 1; text-shadow: 0 0 8px #735ed3, 0 0 15px rgba(115,94,211,0.8); }}
+            @keyframes sparkle {0% { opacity: 0.6; text-shadow: 0 0 3px #fff; } 100% { opacity: 1; text-shadow: 0 0 10px #fff, 0 0 20px rgba(255,255,255,0.9); }}
+            @keyframes flicker {0% { opacity: 0.85; transform: scale(1); text-shadow: 0 0 4px #ffb347, 0 0 10px #ffcc33; } 50% { opacity: 1; transform: scale(1.05); text-shadow: 0 0 6px #ffd966, 0 0 14px #ffb347; } 100% { opacity: 0.8; transform: scale(0.98); text-shadow: 0 0 3px #ffb347, 0 0 8px #ffcc33; }}
+
+            @media screen and (max-width: 600px) {
+                .text-content { max-width: 100% !important; font-size: 12pt; }
+                pre.ascii-art { max-width: 100% !important; font-size: 10pt !important; white-space: pre-wrap; overflow-wrap: break-word; }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Content -->
+        <div class="text-content" style="text-align:justify; text-justify:inter-word; text-align-last:left; max-width:600px; margin-bottom:20px;">
+            $div_text_content
+        </div>
+
+        <!-- Tree ASCII -->
+        <pre class="ascii-art">
+            <span class="star">     |</span>
+            <span class="star">    -+-</span>
+            <span class="star">     A</span>
+            <span class="tree">    /=\</span>        
+        <span class="tree">      <span class="candle">i</span>/ </span><span class="ball">O</span><span class="tree"> \<span class="candle">i</span></span>            
+        <span class="tree">      /=====\</span>      
+        <span class="tree">      /  </span><span class="candle">i</span><span class="tree">  </span><span class="tree">\</span>      
+    <span class="tree">        <span class="candle">i</span>/ </span><span class="ball_blue">O</span> <span class="star">*</span> <span class="ball_blue">O</span> <span class="tree">\<span class="candle">i</span></span>                                     
+        <span class="tree">    /=========\</span>    
+        <span class="tree">    /  <span class="star">*</span>   <span class="star">*</span>  \</span>    
+    <span class="tree">      <span class="candle">i</span>/ </span><span class="ball">O</span>   <span class="candle">i</span>   <span class="ball">O</span> <span class="tree">\<span class="candle">i</span></span>  
+        <span class="tree">  /=============\</span>  
+        <span class="tree">  /  <span class="ball_blue">O</span>   <span class="candle">i</span>   <span class="ball_blue">O</span>  \</span>  
+    <span class="tree">    <span class="candle">i</span>/  </span><span class="star">*</span>  <span class="ball">O</span>   <span class="ball">O</span>   <span class="star">*</span> <span class="tree">\<span class="candle">i</span></span>
+        <span class="tree">/=================\</span>
+            <span class="trunk">   |___|</span>
+        </pre>
+
+    </body>
+    </html>
+        """)
+
+    return template.substitute(div_text_content=div_text_content)
+
+
+def email2_template(div_text_content) -> str:
+    template = Template("""
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <meta name="color-scheme" content="only">
+            <meta name="supported-color-schemes" content="light">
+
+            <style>
+                body {
+                    background-color: #0f0f23 !important;
+                    color: #b9b9c0 !important;
+                    font-family: "Garamond", monospace; 
+                    font-weight: 200;
+                    font-size: 10pt;
+                    padding: 20px;
+                    -webkit-text-size-adjust: none !important;
+                    -ms-text-size-adjust: none !important;
+                }
+
+                h2 {
+                    font-size: 2em;
+                    font-weight: 400;
+                    color: #ffb347 !important;
+                    text-shadow: 0 0 2px #ffb347, 0 0 5px #ffcc33;
+                }
+
+                h2 a {
+                    text-decoration: none;
+                    color: #0ad228 !important;
+                    text-shadow: 0 0 5px #0ad228, 0 0 10px #0ad228, 0 0 20px #a7c957;
+                }
+
+                a {
+                    color: #bc4749 !important;
+                    text-decoration: none;
+                }
+
+                a:hover, a:focus {
+                    filter: brightness(1.5);
+                    text-shadow: 0 0 8px #bc4749, 0 0 15px #bc4749;
+                }
+
+                .container {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    gap: 20px;
+                }
+
+                .text-content {
+                    text-align: justify;
+                    max-width: 600px;
+                    margin-bottom: 20px;
+                }
+
+                p {
+                    line-height: 1.5;
+                }
+
+                span.highlight {
+                    color: #a7c957;
+                }
+                
+                /* --- Mobile --- */
+                @media screen and (max-width: 600px) {
+                    .container {
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+
+                    .text-content {
+                        max-width: 100% !important;
+                        font-size: 12pt;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+        <!-- Content -->
+        <div class="text-content" style="text-align:justify; text-justify:inter-word; text-align-last:left; max-width:600px; margin-bottom:20px;">
+            $div_text_content
+                </div>
+        </body>
+        </html>
+    """)
+    return template.substitute(div_text_content=div_text_content)
