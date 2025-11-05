@@ -1,4 +1,4 @@
-# Automated Secret Santa
+# 🎅🏻 Automated Secret Santa
 
 A automated Secret Santa in Python — Assign participants and automatically forward wishlists!  
 
@@ -136,7 +136,3 @@ kill <PID>
 ```
 
 ---
-
-## License
-
-Do whatever, just don't say 'yes' when you should say 'no'. 

@@ -69,7 +69,7 @@ def run_part1(budget: str,language: str) -> None:
 
     assignments = assign_secret_santa(participants, groups)
 
-    with open("secret_data/santa_assignments.json", "w") as f:
+    with open("automated_secret_santa/data_secret/santa_assignments.json", "w") as f:
         json.dump(assignments, f, indent=2)
 
     for santa, santa_of in assignments.items():

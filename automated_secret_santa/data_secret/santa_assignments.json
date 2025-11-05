@@ -1,0 +1,8 @@
+{
+  "Bob": "Charlie",
+  "Charlie": "Gerard",
+  "David": "Bob",
+  "Marie": "Sophie",
+  "Gerard": "David",
+  "Sophie": "Marie"
+}
