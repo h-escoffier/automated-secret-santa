@@ -1,6 +1,6 @@
 # 🎅🏻 Automated Secret Santa
 
-A automated Secret Santa in Python — Assign participants and automatically forward wishlists!  
+An automated Secret Santa in Python — Assign participants and automatically forward wishlists!  
 
 ---
 
@@ -79,7 +79,6 @@ Add your email configuration in the `data/mail_config.json` file :
 Edit the `participants.csv` file to add your participants and their email addresses:
 
 ```csv
-name,email
 Alice,alice@example.com
 Bob,bob@example.com
 Charlie,charlie@example.com
