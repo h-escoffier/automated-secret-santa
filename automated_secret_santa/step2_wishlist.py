@@ -8,7 +8,7 @@ from automated_secret_santa.email_template import create_email2
 console = Console()
 
 
-def load_assignments(filename="secret_data/santa_assignments.json"):
+def load_assignments(filename="automated_secret_santa/data_secret/santa_assignments.json"):
     with open(filename) as f:
         return json.load(f)
     
