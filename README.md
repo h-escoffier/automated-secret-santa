@@ -8,7 +8,7 @@ A automated Secret Santa in Python — Assign participants and automatically for
 
 - Automatically assigns Secret Santa pairs (with exclusion rules)
 - Sends customized HTML emails to each participant
-- Periodically checks your mailbox and forwards participants' wishlists
+- Periodically checks the Secret Santa mailbox and forwards participants' wishlists
 - Available in English and French
 
 ---
@@ -22,7 +22,7 @@ A automated Secret Santa in Python — Assign participants and automatically for
 > [!WARNING] 
 > This is a capture from Mail (app) on macOS, the rendering may vary depending on the email client.
 >
-> Email HTML/CSS has limited support across clients and some elements may not render exactly the same. 
+> Indeed, email HTML/CSS has limited support across clients and some elements may not render exactly the same. 
 
 ---
 
@@ -72,7 +72,7 @@ Add your email configuration in the `data/mail_config.json` file :
 ```
 
 > [!TIP] 
-> If you use Gmail, you must enable App Passwords and use the generated 16-character token following this [tutorial](https://support.google.com/accounts/answer/185833?hl=en).
+> Using Gmail, you must enable App Passwords and use the generated 16-character token following this [tutorial](https://support.google.com/accounts/answer/185833?hl=en).
 
 ### 2. Setup participants
 
@@ -109,7 +109,7 @@ Each line corresponds to a group of participants who should be excluded from eac
 * `--budget`: Set the maximum gift budget.
 * `--language`: Set the language for the emails
 
-### 2. Forward wishlists manually
+### 2. Forward wishlists (manually)
 
 ```bash
 ./secret_santa.py forward-wishlists --language en
