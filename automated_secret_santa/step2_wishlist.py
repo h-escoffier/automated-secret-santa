@@ -1,4 +1,4 @@
-import imaplib, email, json, asyncio
+import imaplib, email, json, asyncio, re
 from rich.console import Console
 
 from automated_secret_santa.helpers import load_config, load_participants, send_email
@@ -30,6 +30,50 @@ def get_inbox_emails(config):
 
     imap.logout()
     return mails
+
+
+def extract_first_email_message(body: str) -> str:
+    if not body:
+        return ""
+
+    # Reply markers (FR + EN)
+    REPLY_MARKERS = [
+        r"^\s*Le\s+.*\s+a écrit\s*:\s*$",                  # FR: Le mar. 11 nov. 2025 à ...
+        r"^\s*On\s+.*wrote\s*:\s*$",                       # EN: On Tue, Nov 11, 2025 at ...
+        r"^\s*From:\s+.*$",                                # From: John <...>
+        r"^\s*De\s*:\s+.*$",                               # De: John <...>
+        r"^\s*Sent:\s+.*$",                                # Sent: Tuesday...
+        r"^\s*Envoyé\s*:\s+.*$",                           # Envoyé: mardi...
+        r"^\s*To:\s+.*$",                                  # To:
+        r"^\s*À\s*:\s+.*$",                                # À:
+        r"^\s*-{2,}\s*Original Message\s*-{2,}\s*$",        # ---- Original Message ----
+        r"^\s*-----Message d'origine-----\s*$",            # -----Message d'origine-----
+        r"^\s*-{2,}.*Forwarded message.*-{2,}\s*$",         # ---- Forwarded message ----
+    ]
+
+    REPLY_REGEX = re.compile("|".join(f"({m})" for m in REPLY_MARKERS),
+                             flags=re.IGNORECASE | re.MULTILINE)
+
+    # Split into lines
+    lines = body.splitlines()
+
+    cleaned = []
+    for line in lines:
+
+        # Stop at reply header
+        if REPLY_REGEX.match(line):
+            break
+
+        # Stop at quoted text
+        if line.strip().startswith(">"):
+            break
+
+        cleaned.append(line)
+
+    result = "\n".join(cleaned).strip()
+    result = re.sub(r"\n{3,}", "\n\n", result)
+
+    return result
 
 
 def run_part2(language: str) -> None:
@@ -80,18 +124,8 @@ def run_part2(language: str) -> None:
         else:
             body = msg.get_payload(decode=True).decode(errors="ignore")
 
-        # Gmail / Mail 
-        lines = [line for line in body.split("\n") if line.strip() and not line.startswith(">")]
-
-        # Outlook
-        try:
-            index = next(i for i, line in enumerate(lines) if "hyper.super.secret.santa@gmail.com" in line)
-            lines = lines[:index]
-        except StopIteration:
-            pass
+        body_cleaned = extract_first_email_message(body)
         
-        body_cleaned = "<br>".join(lines)
-
         if language != 'fr' and language != 'en':
             console.print(f"[red] Error: Language {language} not supported. - Only 'en' and 'fr' are supported.[/red]")
             exit()

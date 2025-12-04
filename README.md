@@ -111,7 +111,7 @@ Each line corresponds to a group of participants who should be excluded from eac
 ### 2. Forward wishlists (manually)
 
 ```bash
-./secret_santa.py forward-wishlists --language en
+./secret_santa.py forward-emails --language en
 ```
 
 * `--language`: Set the language for the emails
@@ -133,5 +133,10 @@ Stop it:
 ```bash
 kill <PID>
 ```
+
+> [!WARNING] 
+> Only the text of the email message is forwarded to the Secret Santa.
+> Replies, quotes, forwarded messages, signatures, and email history are removed
+> Images, emojis, and attachments are not forwarded and can cause issues.
 
 ---
