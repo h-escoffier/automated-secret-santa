@@ -112,7 +112,7 @@ Each line corresponds to a group of participants who should be excluded from eac
 
 > [!WARNING] 
 > Only the text of the email message is forwarded to the Secret Santa.
-> Replies, quotes, forwarded messages, signatures, and email history are removed.
+> Replies are removed.
 > 
 > Images, emojis, and attachments are not forwarded and can cause issues.
 
