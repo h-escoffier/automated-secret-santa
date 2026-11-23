@@ -15,7 +15,6 @@ app = typer.Typer(
 console = Console()
 
 
-
 @app.command("send-emails")
 def send_emails(
     budget: str = typer.Option(..., "--budget", "-b", help="Budget for the gift (e.g., '20€')"),

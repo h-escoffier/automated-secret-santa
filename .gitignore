@@ -1,5 +1,7 @@
 __pycache__/
 .DS_Store
 data_perso/*
+data/*
 nohup.out
 .venv/
+automated_secret_santa/data_secret/santa_assignments.json
