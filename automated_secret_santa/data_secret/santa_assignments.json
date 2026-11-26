@@ -1,6 +1,8 @@
 {
-  "Hugues": "Quentin",
-  "Sophie": "Hugues",
-  "Quentin": "Grégoire",
-  "Grégoire": "Sophie"
+  "Bob": "Charlie",
+  "Charlie": "Gerard",
+  "David": "Bob",
+  "Marie": "Sophie",
+  "Gerard": "David",
+  "Sophie": "Marie"
 }
