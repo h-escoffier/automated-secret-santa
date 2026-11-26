@@ -22,17 +22,25 @@ BALL_BLUE = "#735ed3"
 TRUNK = "#8b5a2b"
 
 FONT = "Garamond, 'Times New Roman', Times, serif"
-MONO = "'Courier New', Courier, monospace"
+MONO = "Courier New, Courier, monospace"
 
 # Inline styles
-STYLE_H2 = (f"margin:0 0 18px 0; padding:0; font-family:{FONT}; font-size:30px; line-height:1.2; "
-            f"font-weight:normal; color:{ORANGE}; text-shadow:0 0 2px {ORANGE}, 0 0 5px #ffcc33;")
-STYLE_P = (f"margin:0 0 14px 0; padding:0; font-family:{FONT}; font-size:17px; line-height:1.5; "
-           f"color:{TEXT}; text-align:justify;")
+STYLE_H2 = (
+    f"margin:0 0 18px 0; padding:0; font-family:{FONT}; font-size:30px; "
+    f"line-height:1.2; font-weight:normal; color:{ORANGE}; "
+    f"text-shadow:0 0 2px {ORANGE}, 0 0 5px #ffcc33;"
+)
+STYLE_P = (
+    f"margin:0 0 14px 0; padding:0; font-family:{FONT}; font-size:17px; "
+    f"line-height:1.5; color:{TEXT}; text-align:justify;"
+)
 STYLE_NAME = f"color:{NAME_RED};"
 STYLE_HIGHLIGHT = f"color:{LIME};"
-STYLE_QUOTE = (f"border-left:3px solid {ORANGE}; padding:4px 0 4px 14px; font-family:{FONT}; "
-               f"font-size:17px; line-height:1.5; color:{TEXT}; text-align:left;")
+STYLE_QUOTE = (
+    f"border-left:3px solid {ORANGE}; padding:4px 0 4px 14px; "
+    f"font-family:{FONT}; font-size:17px; line-height:1.5; "
+    f"color:{TEXT}; text-align:left;"
+)
 
 EMPTY_MESSAGE = {
     "fr": "(Aucun texte - voir les pièces jointes éventuelles.)",
@@ -42,7 +50,10 @@ EMPTY_MESSAGE = {
 
 def check_language(language):
     if language not in SUPPORTED_LANGUAGES:
-        console.print(f"[red] Error: Language {language} not supported. - Only 'en' and 'fr' are supported.[/red]")
+        console.print(
+            f"[red] Error: Language {language} not supported. "
+            "Only 'en' and 'fr' are supported.[/red]"
+        )
         sys.exit(1)
 
 
@@ -53,30 +64,35 @@ def prepare_message(message: str) -> str:
 
 def create_email1(santa, santa_of, budget, language):
     check_language(language)
-    santa, santa_of, budget = html.escape(santa), html.escape(santa_of), html.escape(budget)
-    if language == 'fr':
+    santa, santa_of, budget = (
+        html.escape(santa),
+        html.escape(santa_of),
+        html.escape(budget),
+    )
+
+    if language == "fr":
         html_body = email1_template_fr(santa, santa_of, budget)
     else:
         html_body = email1_template_en(santa, santa_of, budget)
 
-    full_html = email1_template(html_body)
-    return full_html
+    return email1_template(html_body)
 
 
 def create_email2(santa, santa_of, message, language):
     check_language(language)
     santa, santa_of = html.escape(santa), html.escape(santa_of)
+
     if message.strip():
         message = prepare_message(message)
     else:
         message = html.escape(EMPTY_MESSAGE[language])
-    if language == 'fr':
+
+    if language == "fr":
         html_body = email2_template_fr(santa, santa_of, message)
     else:
         html_body = email2_template_en(santa, santa_of, message)
 
-    full_html = email2_template(html_body)
-    return full_html
+    return email2_template(html_body)
 
 
 # HTML building blocks
@@ -100,7 +116,8 @@ def _highlight(text: str) -> str:
 def _quote(message: str) -> str:
     return (
         '<div style="margin:0 0 14px 0;">'
-        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
+        '<table role="presentation" width="100%" cellpadding="0" '
+        'cellspacing="0" border="0"><tr>'
         f'<td style="{STYLE_QUOTE}">{message}</td>'
         '</tr></table></div>'
     )
@@ -111,10 +128,16 @@ def _quote(message: str) -> str:
 def email1_template_fr(santa, santa_of, budget):
     return "\n".join([
         _h2(f"Ho ho ho {santa} !"),
-        _p(f"Je t'ai désigné pour être le Père Noël secret de {_name(santa_of)} !"),
+        _p(
+            f"Je t'ai désigné pour être le Père Noël secret de "
+            f"{_name(santa_of)} !"
+        ),
         _p(f"Le budget est de {_highlight(budget)}."),
-        _p("Tu peux faire ta liste d'envies à ton Père Noël en répondant à cet e-mail, "
-           "je me chargerai de la transmettre à la personne que j'ai désignée pour toi."),
+        _p(
+            "Tu peux faire ta liste d'envies à ton Père Noël en répondant "
+            "à cet e-mail, je me chargerai de la transmettre à la personne "
+            "que j'ai désignée pour toi."
+        ),
         _p("Le Père Noël"),
     ])
 
@@ -124,8 +147,11 @@ def email1_template_en(santa, santa_of, budget):
         _h2(f"Ho ho ho {santa} !"),
         _p(f"You have been chosen to be the secret Santa for {_name(santa_of)}!"),
         _p(f"The budget is {_highlight(budget)}."),
-        _p("You can send your wishlist to your Santa by replying to this email, "
-           "and I will make sure it reaches the person I've assigned to you."),
+        _p(
+            "You can send your wishlist to your Santa by replying to this "
+            "email, and I will make sure it reaches the person I've assigned "
+            "to you."
+        ),
         _p("Santa Claus"),
     ])
 
@@ -167,6 +193,7 @@ TREE_ROWS = [
     "/=================\\",
     "       |___|",
 ]
+
 TREE_CHARS = {
     "*": ("star", YELLOW),
     "O": ("ball", BALL_RED),
@@ -176,25 +203,54 @@ TREE_CHARS = {
 
 
 def render_tree() -> str:
+    mono = "Courier New, Courier, monospace"
     last = len(TREE_ROWS) - 1
-    lines = []
+    rows = []
+
     for r, row in enumerate(TREE_ROWS):
+        row = row.rstrip()
+        stripped = row.lstrip(" ")
+        prefix = "&nbsp;" * (len(row) - len(stripped))
+        row = stripped
+
         out = []
-        for ch in row.rstrip():
+        for ch in row:
             if ch == " ":
-                out.append(" ")
+                out.append("&nbsp;")
                 continue
+
             if r < 3:
                 cls, color = "star", YELLOW
             elif r == last:
                 cls, color = "trunk", TRUNK
             else:
                 cls, color = TREE_CHARS.get(ch, ("tree", GREEN))
-            glow = f" text-shadow:0 0 5px {color};" if cls not in ("tree", "trunk") else ""
+
+            glow = (
+                f" text-shadow:0 0 5px {color};"
+                if cls not in ("tree", "trunk")
+                else ""
+            )
             glyph = "O" if ch == "0" else ch
-            out.append(f'<span class="{cls}" style="color:{color};{glow}">{html.escape(glyph)}</span>')
-        lines.append("".join(out))
-    return "\n".join(lines)
+            out.append(
+                f'<span class="{cls}" style="font-family:{mono}; '
+                f'color:{color};{glow}">'
+                f'{html.escape(glyph)}</span>'
+            )
+
+        line = prefix + "".join(out)
+        rows.append(
+            f'<tr><td align="left" nowrap="nowrap" '
+            f'style="font-family:{mono}; font-size:12px; line-height:1.1; '
+            f'padding:0; margin:0; white-space:nowrap;">{line}</td></tr>'
+        )
+
+    return (
+        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0" '
+        f'style="font-family:{mono}; border-collapse:collapse; margin:0 auto;">'
+        + "".join(rows)
+        + "</table>"
+    )
 
 
 # Page shell
@@ -208,33 +264,125 @@ PAGE_TEMPLATE = Template("""<!DOCTYPE html>
     <meta name="color-scheme" content="light only">
     <meta name="supported-color-schemes" content="light only">
     <title>Secret Santa</title>
-    <!--[if mso]><style>body, table, td, h2, p, pre { font-family: 'Times New Roman', serif !important; }</style><![endif]-->
+
+    <!--[if mso]>
+    <style>
+        body, table, td, h2, p, div {
+            font-family: 'Times New Roman', serif !important;
+        }
+        .tree, .tree span, .tree div {
+            font-family: 'Courier New', Courier, monospace !important;
+        }
+    </style>
+    <![endif]-->
+
     <style data-premailer="ignore">
-        :root { color-scheme: light only; supported-color-schemes: light only; }
-        body { margin: 0; padding: 0; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-        a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
+        :root {
+            color-scheme: light only;
+            supported-color-schemes: light only;
+        }
 
-        /* Animated tree: only clients supporting CSS animations (Apple Mail, iOS Mail) will animate it */
-        .star { animation: twinkle 1.5s infinite alternate ease-in-out; }
-        .ball { animation: blink-red 2s infinite alternate ease-in-out; }
-        .ball_blue { animation: blink-blue 2.5s infinite alternate ease-in-out; }
-        .candle { animation: flicker 0.3s infinite alternate ease-in-out; }
+        body {
+            margin: 0;
+            padding: 0;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
 
-        @keyframes twinkle { 0% { opacity: 0.6; } 100% { opacity: 1; text-shadow: 0 0 10px #fff700, 0 0 20px #f9e900; } }
-        @keyframes blink-red { 0% { opacity: 0.5; } 100% { opacity: 1; text-shadow: 0 0 8px #ff4c4c, 0 0 15px rgba(255,76,76,0.8); } }
-        @keyframes blink-blue { 0% { opacity: 0.5; } 100% { opacity: 1; text-shadow: 0 0 8px #735ed3, 0 0 15px rgba(115,94,211,0.8); } }
-        @keyframes flicker { 0% { opacity: 0.8; } 100% { opacity: 1; text-shadow: 0 0 6px #ffd966, 0 0 14px #ffb347; } }
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+        }
+
+        /*
+         * Gmail mobile targeting:
+         * Gmail's mobile apps support the "u + .body" selector.
+         * The tree is hidden only when this selector is recognized.
+         * Other clients retain the original side-by-side layout.
+         */
+        u + .body .gmail-hide {
+            display: none !important;
+            max-height: 0 !important;
+            height: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+            visibility: hidden !important;
+            mso-hide: all !important;
+        }
+
+        /* Animation: progressive enhancement only */
+        .star {
+            animation: twinkle 1.5s infinite alternate ease-in-out;
+        }
+
+        .ball {
+            animation: blink-red 2s infinite alternate ease-in-out;
+        }
+
+        .ball_blue {
+            animation: blink-blue 2.5s infinite alternate ease-in-out;
+        }
+
+        .candle {
+            animation: flicker 0.3s infinite alternate ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.6; }
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 10px #fff700, 0 0 20px #f9e900;
+            }
+        }
+
+        @keyframes blink-red {
+            0% { opacity: 0.5; }
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 8px #ff4c4c, 0 0 15px rgba(255,76,76,0.8);
+            }
+        }
+
+        @keyframes blink-blue {
+            0% { opacity: 0.5; }
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 8px #735ed3, 0 0 15px rgba(115,94,211,0.8);
+            }
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.8; }
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 6px #ffd966, 0 0 14px #ffb347;
+            }
+        }
     </style>
 </head>
-<body style="margin:0; padding:0; background-color:$bg;" bgcolor="$bg">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="$bg" style="background-color:$bg;">
+
+<body class="body"
+      style="margin:0; padding:0; background-color:$bg;"
+      bgcolor="$bg">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+           border="0" bgcolor="$bg"
+           style="background-color:$bg;">
         <tr>
             <td align="center" style="padding:24px 16px;">
-                <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+                <!--[if mso]>
+                <table role="presentation" width="600" cellpadding="0"
+                       cellspacing="0" border="0">
+                    <tr><td>
+                <![endif]-->
+
                 <div style="max-width:600px; margin:0 auto; text-align:left;">
-$inner
+                    $inner
                 </div>
-                <!--[if mso]></td></tr></table><![endif]-->
+
+                <!--[if mso]>
+                    </td></tr>
+                </table>
+                <![endif]-->
             </td>
         </tr>
     </table>
@@ -242,12 +390,15 @@ $inner
 </html>
 """)
 
+
 COLUMNS_TEMPLATE = Template("""                    <div style="font-size:0; line-height:0; text-align:left;">
                         <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td width="390" valign="top"><![endif]-->
                         <div style="display:inline-block; width:100%; max-width:390px; vertical-align:top;">
 $text
-                        </div><!--[if mso]></td><td width="210" valign="top"><![endif]--><div style="display:inline-block; width:100%; max-width:210px; vertical-align:top; text-align:center;">
-                            <pre style="display:inline-block; margin:0; padding:8px 0 0 0; font-family:$mono; font-size:13px; line-height:1; text-align:left; white-space:pre;">$tree</pre>
+                        </div><!--[if mso]></td><td width="210" valign="top"><![endif]--><div class="gmail-hide" style="display:inline-block; width:100%; max-width:210px; vertical-align:top; text-align:center;">
+                            <div style="padding:8px 0 0 0;">
+$tree
+                            </div>
                         </div>
                         <!--[if mso]></td></tr></table><![endif]-->
                     </div>""")
@@ -255,11 +406,17 @@ $text
 
 def email1_template(div_text_content: str) -> str:
     """
-    HTML email template for Secret Santa assignment email (text + ASCII tree side by side).
+    HTML email template for Secret Santa assignment email
+    (text + ASCII tree side by side).
 
-    The ASCII art tree has been adapted from ASCII Art Archive (https://www.asciiart.eu/holiday-and-events/christmas/trees).
+    The ASCII art tree has been adapted from ASCII Art Archive:
+    https://www.asciiart.eu/holiday-and-events/christmas/trees
     """
-    columns = COLUMNS_TEMPLATE.safe_substitute(text=div_text_content, tree=render_tree(), mono=MONO)
+    columns = COLUMNS_TEMPLATE.safe_substitute(
+        text=div_text_content,
+        tree=render_tree(),
+        mono=MONO,
+    )
     return PAGE_TEMPLATE.safe_substitute(inner=columns, bg=BG)
 
 
