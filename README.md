@@ -66,6 +66,7 @@ Add your email configuration in the `data/mail_config.json` file :
 
 ```json
 {
+
   "from_email": "example_email@gmail.com",
   "password": "xxxxxxxxxxxxxxxx"
 }
@@ -73,6 +74,16 @@ Add your email configuration in the `data/mail_config.json` file :
 
 > [!TIP] 
 > Using Gmail, you must enable App Passwords and use the generated 16-character token following this [tutorial](https://support.google.com/accounts/answer/185833?hl=en).
+
+Optional keys:
+ 
+```json
+{
+  "from_name": "Secret Santa",
+}
+```
+ 
+* `from_name`: Display name of the sender (default: none, only the address is shown).
 
 ### 2. Setup participants
 
@@ -108,19 +119,24 @@ Each line corresponds to a group of participants who should be excluded from eac
 * `--budget`: Set the maximum gift budget.
 * `--language`: Set the language for the emails
 
+If an email cannot be sent (wrong address, network error...), the error is displayed and the other emails are still sent. The draw is saved anyway.
+
 ### 2. Forward wishlists (manually)
 
 > [!WARNING] 
-> Only the text of the email message is forwarded to the Secret Santa.
-> Replies are removed.
-> 
-> Images, emojis, and attachments are not forwarded and can cause issues.
+> The text of the message is forwarded to the Secret Santa, along with images and attachments.
+> Replies and quoted text are removed (as well as signatures like "Sent from my iPhone").
+>
+> Emails from addresses that are not in the participants list are ignored (a warning is displayed).
 
 ```bash
 ./secret_santa.py forward-emails --language en
 ```
 
 * `--language`: Set the language for the emails
+
+Only unread emails of the Secret Santa mailbox are processed. An email is marked as read once it has been forwarded; if the forwarding fails, it stays unread and is retried at the next run.
+
 
 ### _(Optional)_ Enable automatic wishlist forwarding
 
